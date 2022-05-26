@@ -2,8 +2,8 @@ module Main exposing (..)
 
 import Browser exposing (Document)
 import Browser.Events
-import Html exposing (div, input, text, select, button, option)
-import Html.Attributes exposing (class, width, height, style)
+import Html exposing (div, input, text, select, button, option, a)
+import Html.Attributes exposing (class, width, height, style, href)
 import Html.Events exposing (onClick, onInput)
 import Math.Vector3 exposing (..)
 import Math.Vector2 exposing (..)
@@ -616,8 +616,12 @@ view model =
 
 body_html : Model -> List (Html.Html Msg)
 body_html model =
-  [ div [] [ text "hello there" ]
-  , div [class "canvas-container" ]
+  [ div [] [ a [href "https://github.com/ryry0" ] [ text "GITHUB" ] ]
+  , div [] [ a [href
+  "https://raw.githubusercontent.com/ryry0/LaTeX-Resume/master/reyes-online.pdf"
+  ] [ text "RÉSUMÉ" ] ]
+  , div [] [ a [href "https://ourobo.rs" ] [ text "BLOG" ] ]
+  , div [ class "canvas-container" ]
         [ select [ onInput Select ]
             (List.map attractorOption attractorlist)
         , button [ onClick Reset ] [ text "Reset" ]
