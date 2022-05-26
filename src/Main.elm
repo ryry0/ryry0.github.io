@@ -1,6 +1,6 @@
 module Main exposing (..)
 
-import Browser
+import Browser exposing (Document)
 import Browser.Events
 import Html exposing (div, input, text, select, button, option)
 import Html.Attributes exposing (width, height, style)
@@ -12,7 +12,7 @@ import WebGL exposing (..)
 
 
 main =
-    Browser.element
+    Browser.document
         { init = init
         , view = view
         , update = update
@@ -564,7 +564,7 @@ update action model =
                 finalModel =
                     { model
                         | renderable = queue <| genpoint model.attractor (List.head model.renderable) :: model.renderable
-                        , rotation = mul model.rotation <| genrotate 0.01
+                        , rotation = mul model.rotation <| genrotate 0.001
                     }
             in
                 ( finalModel, Cmd.none )
@@ -607,16 +607,21 @@ glview model =
         ]
 
 
-view : Model -> Html.Html Msg
+view : Model -> Document Msg
 view model =
-    div []
+    { title = "homepage"
+    , body = [body_html model]
+    }
+
+
+body_html : Model -> Html.Html Msg
+body_html model =
+  div []
         [ select [ onInput Select ]
             (List.map attractorOption attractorlist)
         , button [ onClick Reset ] [ text "Reset" ]
         , glview model
         ]
-
-
 
 -- Shaders
 

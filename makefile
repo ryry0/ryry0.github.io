@@ -5,7 +5,7 @@ SOURCE_EXT=elm
 SOURCES=src/Main.elm
 
 all:
-	elm make $(SOURCES) --output=index2.html
+	elm make $(SOURCES) --output=main.js
 
 format:
 	elm-format $(SOURCES)
