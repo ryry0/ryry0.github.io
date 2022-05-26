@@ -3,7 +3,7 @@ module Main exposing (..)
 import Browser exposing (Document)
 import Browser.Events
 import Html exposing (div, input, text, select, button, option)
-import Html.Attributes exposing (width, height, style)
+import Html.Attributes exposing (class, width, height, style)
 import Html.Events exposing (onClick, onInput)
 import Math.Vector3 exposing (..)
 import Math.Vector2 exposing (..)
@@ -74,7 +74,7 @@ init _ =
             { renderable = [ initialpoint ]
             , rotation = Math.Matrix4.identity
             , perspective = perspective 1 1
-            , resolution = ( 1000, 1000 )
+            , resolution = ( 500, 500 )
             , attractor = thomas
             , scale = 0.08
             }
@@ -610,18 +610,20 @@ glview model =
 view : Model -> Document Msg
 view model =
     { title = "homepage"
-    , body = [body_html model]
+    , body = body_html model
     }
 
 
-body_html : Model -> Html.Html Msg
+body_html : Model -> List (Html.Html Msg)
 body_html model =
-  div []
+  [ div [] [ text "hello there" ]
+  , div [class "canvas-container" ]
         [ select [ onInput Select ]
             (List.map attractorOption attractorlist)
         , button [ onClick Reset ] [ text "Reset" ]
         , glview model
         ]
+  ]
 
 -- Shaders
 
