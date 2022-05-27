@@ -1,13 +1,13 @@
-module Main exposing (..)
+module Main exposing (main)
 
 import Browser exposing (Document)
 import Browser.Events
-import Html exposing (div, input, text, select, button, option, a)
-import Html.Attributes exposing (class, width, height, style, href)
+import Html exposing (a, button, div, input, option, select, text)
+import Html.Attributes exposing (class, height, href, style, width)
 import Html.Events exposing (onClick, onInput)
-import Math.Vector3 exposing (..)
-import Math.Vector2 exposing (..)
 import Math.Matrix4 exposing (..)
+import Math.Vector2 exposing (..)
+import Math.Vector3 exposing (..)
 import WebGL exposing (..)
 
 
@@ -79,7 +79,7 @@ init _ =
             , scale = 0.08
             }
     in
-        ( model, Cmd.none )
+    ( model, Cmd.none )
 
 
 init_scale : Float
@@ -135,11 +135,11 @@ genpoint attractor maybevertex =
                 z =
                     Math.Vector3.getZ vertex.a_position
             in
-                let
-                    ( newx, newy, newz ) =
-                        attractor x y z
-                in
-                    { a_position = vec3 newx newy newz, a_time = vertex.a_time + 0.1 }
+            let
+                ( newx, newy, newz ) =
+                    attractor x y z
+            in
+            { a_position = vec3 newx newy newz, a_time = vertex.a_time + 0.1 }
 
 
 initialpoint : Vertex
@@ -166,8 +166,9 @@ genvertex x y z =
 
 queue : List Vertex -> List Vertex
 queue list =
-    if (List.length list > num_points) then
+    if List.length list > num_points then
         List.take num_points list
+
     else
         list
 
@@ -205,7 +206,7 @@ lorenz x y z =
         newz =
             z + dz * dt
     in
-        ( newx, newy, newz )
+    ( newx, newy, newz )
 
 
 aizawa : Attractor
@@ -259,7 +260,7 @@ aizawa x y z =
         newz =
             z + dz * dt
     in
-        ( newx, newy, newz )
+    ( newx, newy, newz )
 
 
 anishchenko_astakhov : Attractor
@@ -268,6 +269,7 @@ anishchenko_astakhov x y z =
         i n =
             if n > 0 then
                 1
+
             else
                 0
 
@@ -287,7 +289,7 @@ anishchenko_astakhov x y z =
             -x
 
         dz =
-            -eta * z + eta * (i x) * (x ^ 2)
+            -eta * z + eta * i x * (x ^ 2)
 
         newx =
             x + dx * dt
@@ -298,7 +300,7 @@ anishchenko_astakhov x y z =
         newz =
             z + dz * dt
     in
-        ( newx, newy, newz )
+    ( newx, newy, newz )
 
 
 bouali : Attractor
@@ -331,7 +333,7 @@ bouali x y z =
         newz =
             z + dz * dt
     in
-        ( newx, newy, newz )
+    ( newx, newy, newz )
 
 
 thomas : Attractor
@@ -344,13 +346,13 @@ thomas x y z =
             0.1
 
         dx =
-            (sin y) - beta * x
+            sin y - beta * x
 
         dy =
-            (sin z) - beta * y
+            sin z - beta * y
 
         dz =
-            (sin x) - beta * z
+            sin x - beta * z
 
         newx =
             x + dx * dt
@@ -361,7 +363,7 @@ thomas x y z =
         newz =
             z + dz * dt
     in
-        ( newx, newy, newz )
+    ( newx, newy, newz )
 
 
 
@@ -417,7 +419,7 @@ coullet x y z =
         newz =
             z + dz * dt
     in
-        ( newx, newy, newz )
+    ( newx, newy, newz )
 
 
 yu_wang : Attractor
@@ -456,7 +458,7 @@ yu_wang x y z =
         newz =
             z + dz * dt
     in
-        ( newx, newy, newz )
+    ( newx, newy, newz )
 
 
 
@@ -538,7 +540,7 @@ update action model =
                                 , attractor = thomas
                             }
             in
-                ( finalModel, Cmd.none )
+            ( finalModel, Cmd.none )
 
         Reset ->
             let
@@ -547,7 +549,7 @@ update action model =
                         | renderable = [ initialpoint ]
                     }
             in
-                ( finalModel, Cmd.none )
+            ( finalModel, Cmd.none )
 
         Resolution ( x, y ) ->
             let
@@ -557,7 +559,7 @@ update action model =
                         , resolution = ( x, y )
                     }
             in
-                ( finalModel, Cmd.none )
+            ( finalModel, Cmd.none )
 
         DeltaTime dt ->
             let
@@ -567,7 +569,7 @@ update action model =
                         , rotation = mul model.rotation <| genrotate 0.001
                     }
             in
-                ( finalModel, Cmd.none )
+            ( finalModel, Cmd.none )
 
 
 
@@ -578,7 +580,7 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
         [ Browser.Events.onAnimationFrameDelta DeltaTime
---        , Browser.Events.onResize windowSizeToResolution
+        --, Browser.Events.onResize windowSizeToResolution
         ]
 
 
@@ -616,22 +618,25 @@ view model =
 
 body_html : Model -> List (Html.Html Msg)
 body_html model =
-  [
-    div [ class "all-container" ] [
-      div [ class "top-container" ] [
-        div [] [ a [href "https://github.com/ryry0" ] [ text "GITHUB" ] ]
-      , div [] [ a
-        [ href "https://raw.githubusercontent.com/ryry0/LaTeX-Resume/master/reyes-online.pdf" ]
-        [ text "RÉSUMÉ" ] ]
-      , div [] [ a [href "https://ourobo.rs" ] [ text "BLOG" ] ]
-      ]
-    , div [ class "canvas-container" ]
-        [ select [ onInput Select ] (List.map attractorOption attractorlist)
-        , button [ onClick Reset ] [ text "Reset" ]
-        , glview model
+    [ div [ class "all-container" ]
+        [ div [ class "top-container" ]
+            [ div [] [ a [ href "https://github.com/ryry0" ] [ text "GITHUB" ] ]
+            , div [ class "hide" ] [ a [ href "https://ourobo.rs" ] [ text "BLOG" ] ]
+            , div []
+                [ a
+                    [ href "https://raw.githubusercontent.com/ryry0/LaTeX-Resume/master/reyes-online.pdf" ]
+                    [ text "RÉSUMÉ" ]
+                ]
+            ]
+        , div [ class "canvas-container" ]
+            [ --select [ onInput Select ] (List.map attractorOption
+            --attractorlist) , button [ onClick Reset ] [ text "Reset" ],
+              glview model
+            ]
         ]
     ]
-  ]
+
+
 
 -- Shaders
 
