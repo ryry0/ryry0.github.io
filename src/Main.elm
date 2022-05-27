@@ -74,7 +74,7 @@ init _ =
             { renderable = [ initialpoint ]
             , rotation = Math.Matrix4.identity
             , perspective = perspective 1 1
-            , resolution = ( 500, 500 )
+            , resolution = ( 1000, 1000 )
             , attractor = thomas
             , scale = 0.08
             }

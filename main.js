@@ -6799,7 +6799,7 @@ var $author$project$Main$init = function (_v0) {
 		perspective: A2($author$project$Main$perspective, 1, 1),
 		renderable: _List_fromArray(
 			[$author$project$Main$initialpoint]),
-		resolution: _Utils_Tuple2(500, 500),
+		resolution: _Utils_Tuple2(1000, 1000),
 		rotation: $elm_explorations$linear_algebra$Math$Matrix4$identity,
 		scale: 0.08
 	};
