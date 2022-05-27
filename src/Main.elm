@@ -578,7 +578,7 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
         [ Browser.Events.onAnimationFrameDelta DeltaTime
-        , Browser.Events.onResize windowSizeToResolution
+--        , Browser.Events.onResize windowSizeToResolution
         ]
 
 
@@ -609,24 +609,28 @@ glview model =
 
 view : Model -> Document Msg
 view model =
-    { title = "homepage"
+    { title = "Ryan Reyes"
     , body = body_html model
     }
 
 
 body_html : Model -> List (Html.Html Msg)
 body_html model =
-  [ div [] [ a [href "https://github.com/ryry0" ] [ text "GITHUB" ] ]
-  , div [] [ a [href
-  "https://raw.githubusercontent.com/ryry0/LaTeX-Resume/master/reyes-online.pdf"
-  ] [ text "RÉSUMÉ" ] ]
-  , div [] [ a [href "https://ourobo.rs" ] [ text "BLOG" ] ]
-  , div [ class "canvas-container" ]
-        [ select [ onInput Select ]
-            (List.map attractorOption attractorlist)
+  [
+    div [ class "all-container" ] [
+      div [ class "top-container" ] [
+        div [] [ a [href "https://github.com/ryry0" ] [ text "GITHUB" ] ]
+      , div [] [ a
+        [ href "https://raw.githubusercontent.com/ryry0/LaTeX-Resume/master/reyes-online.pdf" ]
+        [ text "RÉSUMÉ" ] ]
+      , div [] [ a [href "https://ourobo.rs" ] [ text "BLOG" ] ]
+      ]
+    , div [ class "canvas-container" ]
+        [ select [ onInput Select ] (List.map attractorOption attractorlist)
         , button [ onClick Reset ] [ text "Reset" ]
         , glview model
         ]
+    ]
   ]
 
 -- Shaders
