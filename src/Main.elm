@@ -631,7 +631,7 @@ body_html model =
         , div [ class "canvas-container" ]
             [ --select [ onInput Select ] (List.map attractorOption
             --attractorlist) , button [ onClick Reset ] [ text "Reset" ],
-              glview model
+              a [ href "https://recu.rs/Doodles" ] [ glview model ]
             ]
         ]
     ]

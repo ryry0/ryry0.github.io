@@ -7618,7 +7618,16 @@ var $author$project$Main$body_html = function (model) {
 						]),
 					_List_fromArray(
 						[
-							$author$project$Main$glview(model)
+							A2(
+							$elm$html$Html$a,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$href('https://recu.rs/Doodles')
+								]),
+							_List_fromArray(
+								[
+									$author$project$Main$glview(model)
+								]))
 						]))
 				]))
 		]);
